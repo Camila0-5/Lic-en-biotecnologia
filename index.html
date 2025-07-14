@@ -52,6 +52,20 @@
       padding: 15px;
       display: none;
     }
+
+    #reset {
+      margin-top: 30px;
+      padding: 10px 20px;
+      background: #ef5350;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+
+    #reset:hover {
+      background: #d32f2f;
+    }
   </style>
 </head>
 <body>
@@ -115,8 +129,9 @@
   <div class="materia">Laboratorio de bioprocesos</div>
   <div class="materia">Laboratorio de diagnóstico y ciencias forenses</div>
 
-  <!-- INFO -->
+  <!-- INFO Y RESET -->
   <div id="info"></div>
+  <button id="reset" onclick="resetear()">Reiniciar progreso</button>
 
   <!-- SCRIPT -->
   <script>
@@ -145,16 +160,11 @@
       "Biorreactores": ["Industrias y procesos biotecnológicos", "Laboratorio de bioprocesos"]
     };
 
-    const completadas = new Set();
+    const completadas = new Set(JSON.parse(localStorage.getItem("materiasCompletadas") || "[]"));
 
-    document.querySelectorAll('.materia').forEach(materia => {
-      const nombre = materia.innerText;
-      if (!esBloqueada(nombre)) {
-        materia.onclick = () => completar(nombre);
-      } else {
-        materia.classList.add('bloqueada');
-      }
-    });
+    function guardarProgreso() {
+      localStorage.setItem("materiasCompletadas", JSON.stringify([...completadas]));
+    }
 
     function esBloqueada(nombre) {
       return Object.entries(correlativas).some(([req, deps]) =>
@@ -164,10 +174,11 @@
 
     function completar(nombre) {
       const el = Array.from(document.querySelectorAll('.materia')).find(d => d.innerText === nombre);
-      if (!el) return;
+      if (!el || completadas.has(nombre)) return;
       el.classList.add('completada');
       el.onclick = null;
       completadas.add(nombre);
+      guardarProgreso();
       desbloquearMaterias();
       mostrar(nombre);
     }
@@ -175,11 +186,14 @@
     function desbloquearMaterias() {
       document.querySelectorAll('.materia').forEach(materia => {
         const nombre = materia.innerText;
-        if (materia.classList.contains('completada')) return;
+        if (completadas.has(nombre)) return;
 
         if (!esBloqueada(nombre)) {
           materia.classList.remove('bloqueada');
           materia.onclick = () => completar(nombre);
+        } else {
+          materia.classList.add('bloqueada');
+          materia.onclick = null;
         }
       });
     }
@@ -192,6 +206,24 @@
       div.innerHTML = `<strong>${nombre}</strong><br>${abre}`;
       div.style.display = "block";
     }
+
+    function resetear() {
+      if (confirm("¿Estás segura de reiniciar todo el progreso?")) {
+        localStorage.removeItem("materiasCompletadas");
+        location.reload();
+      }
+    }
+
+    // Inicializar
+    document.querySelectorAll('.materia').forEach(materia => {
+      const nombre = materia.innerText;
+
+      if (completadas.has(nombre)) {
+        materia.classList.add('completada');
+      }
+    });
+
+    desbloquearMaterias();
   </script>
 </body>
 </html>
