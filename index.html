@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Malla Curricular - Biotecnología</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+    }
+
+    h1 {
+      color: #1b5e20;
+    }
+
+    h2 {
+      margin-top: 40px;
+      color: #2e7d32;
+    }
+
+    .materia {
+      background: #e8f5e9;
+      border: 1px solid #81c784;
+      border-radius: 8px;
+      padding: 10px;
+      margin: 8px 0;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .materia:hover {
+      background: #c8e6c9;
+    }
+
+    .bloqueada {
+      opacity: 0.4;
+      pointer-events: none;
+    }
+
+    .completada {
+      text-decoration: line-through;
+      background: #c8e6c9;
+      border-color: #388e3c;
+      color: #2e7d32;
+    }
+
+    #info {
+      margin-top: 30px;
+      background: #fff;
+      border-left: 4px solid #388e3c;
+      padding: 15px;
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <h1>Malla Curricular - Biotecnología</h1>
+
+  <!-- MATERIAS -->
+  <h2>1° Año</h2>
+  <div class="materia">Tópicos de álgebra</div>
+  <div class="materia">Introducción a la física</div>
+  <div class="materia">Química general</div>
+  <div class="materia">Introducción a la biología molecular y celular</div>
+  <div class="materia">Pensamiento crítico</div>
+  <div class="materia">Cálculo I</div>
+  <div class="materia">Física aplicada a las biociencias</div>
+  <div class="materia">Cálculo II</div>
+  <div class="materia">Química general e inorgánica</div>
+  <div class="materia">Dirección de empresas</div>
+  <div class="materia">Biología y fisiología molecular</div>
+
+  <h2>2° Año</h2>
+  <div class="materia">Química analítica</div>
+  <div class="materia">Química orgánica</div>
+  <div class="materia">Probabilidad y estadística</div>
+  <div class="materia">Economía general y finanzas</div>
+  <div class="materia">Costos industriales</div>
+  <div class="materia">Genética molecular</div>
+  <div class="materia">Microbiología general</div>
+  <div class="materia">Inglés I</div>
+  <div class="materia">Química biológica I</div>
+  <div class="materia">Análisis instrumental</div>
+
+  <h2>3° Año</h2>
+  <div class="materia">Técnicas biotecnológicas</div>
+  <div class="materia">Fenómenos de transporte</div>
+  <div class="materia">Bioestadística</div>
+  <div class="materia">Agrobiotecnología</div>
+  <div class="materia">Química biológica II</div>
+  <div class="materia">Ingeniería genética I</div>
+  <div class="materia">Fisicoquímica</div>
+  <div class="materia">Comercialización de productos biotecnológicos</div>
+  <div class="materia">Bioinformática</div>
+  <div class="materia">Inmunología</div>
+
+  <h2>4° Año</h2>
+  <div class="materia">Biotecnología y derecho</div>
+  <div class="materia">Ingeniería genética II</div>
+  <div class="materia">Biorreactores</div>
+  <div class="materia">Cultivos celulares</div>
+  <div class="materia">Estrategias industriales</div>
+  <div class="materia">Proyecto final de licenciatura</div>
+  <div class="materia">Genómica y proteómica</div>
+  <div class="materia">Industrias y procesos biotecnológicos</div>
+  <div class="materia">Nanobiotecnología</div>
+  <div class="materia">Bioética</div>
+  <div class="materia">Desarrollo de negocios biotecnológicos</div>
+
+  <h2>5° Año</h2>
+  <div class="materia">Optativa I</div>
+  <div class="materia">Optativa II</div>
+  <div class="materia">Biología de sistemas</div>
+  <div class="materia">Laboratorio de bioprocesos</div>
+  <div class="materia">Laboratorio de diagnóstico y ciencias forenses</div>
+
+  <!-- INFO -->
+  <div id="info"></div>
+
+  <!-- SCRIPT -->
+  <script>
+    const correlativas = {
+      "Tópicos de álgebra": ["Cálculo II"],
+      "Introducción a la física": ["Física aplicada a las biociencias"],
+      "Química general": ["Química general e inorgánica"],
+      "Introducción a la biología molecular y celular": ["Biología y fisiología molecular", "Microbiología general"],
+      "Cálculo I": ["Cálculo II", "Probabilidad y estadística"],
+      "Física aplicada a las biociencias": ["Fisicoquímica", "Fenómenos de transporte"],
+      "Cálculo II": ["Fenómenos de transporte"],
+      "Química general e inorgánica": ["Química analítica", "Química orgánica"],
+      "Dirección de empresas": ["Estrategias industriales"],
+      "Biología y fisiología molecular": ["Genética molecular", "Inmunología", "Bioética", "Agrobiotecnología"],
+      "Química analítica": ["Análisis instrumental"],
+      "Química orgánica": ["Química biológica I"],
+      "Probabilidad y estadística": ["Bioestadística"],
+      "Genética molecular": ["Técnicas biotecnológicas", "Bioinformática"],
+      "Química biológica I": ["Química biológica II", "Cultivos celulares"],
+      "Técnicas biotecnológicas": ["Ingeniería genética I", "Proyecto final de licenciatura", "Genómica y proteómica", "Nanobiotecnología", "Laboratorio de diagnóstico y ciencias forenses"],
+      "Fenómenos de transporte": ["Biorreactores"],
+      "Química biológica II": ["Biología de sistemas"],
+      "Ingeniería genética I": ["Ingeniería genética II"],
+      "Comercialización de productos biotecnológicos": ["Desarrollo de negocios biotecnológicos"],
+      "Bioinformática": ["Genómica y proteómica"],
+      "Biorreactores": ["Industrias y procesos biotecnológicos", "Laboratorio de bioprocesos"]
+    };
+
+    const completadas = new Set();
+
+    document.querySelectorAll('.materia').forEach(materia => {
+      const nombre = materia.innerText;
+      if (!esBloqueada(nombre)) {
+        materia.onclick = () => completar(nombre);
+      } else {
+        materia.classList.add('bloqueada');
+      }
+    });
+
+    function esBloqueada(nombre) {
+      return Object.entries(correlativas).some(([req, deps]) =>
+        deps.includes(nombre) && !completadas.has(req)
+      );
+    }
+
+    function completar(nombre) {
+      const el = Array.from(document.querySelectorAll('.materia')).find(d => d.innerText === nombre);
+      if (!el) return;
+      el.classList.add('completada');
+      el.onclick = null;
+      completadas.add(nombre);
+      desbloquearMaterias();
+      mostrar(nombre);
+    }
+
+    function desbloquearMaterias() {
+      document.querySelectorAll('.materia').forEach(materia => {
+        const nombre = materia.innerText;
+        if (materia.classList.contains('completada')) return;
+
+        if (!esBloqueada(nombre)) {
+          materia.classList.remove('bloqueada');
+          materia.onclick = () => completar(nombre);
+        }
+      });
+    }
+
+    function mostrar(nombre) {
+      const div = document.getElementById("info");
+      const abre = correlativas[nombre]
+        ? "Abre: " + correlativas[nombre].join(", ")
+        : "Sin correlativas registradas.";
+      div.innerHTML = `<strong>${nombre}</strong><br>${abre}`;
+      div.style.display = "block";
+    }
+  </script>
+</body>
+</html>
