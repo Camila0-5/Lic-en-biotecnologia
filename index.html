@@ -214,15 +214,15 @@
       }
     }
 
-    // Inicializar
-    document.querySelectorAll('.materia').forEach(materia => {
-      const nombre = materia.innerText;
+// Inicializar
+document.querySelectorAll('.materia').forEach(materia => {
+  const nombre = materia.innerText;
 
-      if (completadas.has(nombre)) {
-        materia.classList.add('completada');
-      }
-    });
-
+  if (completadas.has(nombre)) {
+    materia.classList.add('completada');
+    materia.onclick = null;
+  }
+});
     desbloquearMaterias();
   </script>
 </body>
